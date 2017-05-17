@@ -1,0 +1,20 @@
+﻿@using UnicamAppelli.Modello
+@using System.Collections.Generic
+@model List<Corso>
+
+<ul> 
+    @foreach(Corso corso in Model){
+        <li> @corso.NomeCorso 
+            <span style = "color : red"> @corso.Docente </span>
+            <ul>
+                @foreach(Appello appello in corso.Appelli){
+                    <li> @appello.DataAppello
+                    </li>
+                }
+            </ul>
+            
+             </li>
+        
+
+}
+     </ul>
