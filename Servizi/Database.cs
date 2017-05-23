@@ -16,7 +16,12 @@ namespace UnicamAppelli.Servizi{
 
       }
 
-      public DbSet<Corso> Corsi{
+      public DbSet<Corso> Corsi {
+            get;
+            private set;
+      }
+
+      public DbSet<Appello> Appelli {
             get;
             private set;
       }

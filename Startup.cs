@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using UnicamAppelli.Modello;
 using UnicamAppelli.Servizi;
 
 namespace UnicamAppelli
@@ -15,8 +16,9 @@ namespace UnicamAppelli
     {
         public Startup(IHostingEnvironment env)
         {
-            using(Database db = new Database()){
-            db.Database.EnsureCreated();
+            
+            if (env.IsDevelopment()) {
+                CreaDatabaseSeNonEsiste();
             }
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -60,5 +62,25 @@ namespace UnicamAppelli
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+        private void CreaDatabaseSeNonEsiste()
+        {
+            using (Database db = new Database())
+            {
+                if (db.Database.EnsureCreated())
+                {
+                    var corso1 = new Corso("Programmazione", "Culmone Rosario");
+                    var corso1Appello1 = new Appello { Corso = corso1, DataAppello = new DateTime(2017, 06, 12, 9, 0, 0) };
+                    var corso1Appello2 = new Appello { Corso = corso1, DataAppello = new DateTime(2017, 07, 12, 14, 0, 0) };
+                    db.Appelli.Add(corso1Appello1);
+                    db.Appelli.Add(corso1Appello2);
+                    var corso2 = new Corso("Sistemi operativi", "Diletta Romana Cacciagrano");
+                    var corso2Appello1 = new Appello { Corso = corso2, DataAppello = new DateTime(2017, 06, 10, 10, 0, 0) };
+                    db.Appelli.Add(corso2Appello1);
+                    db.SaveChanges();
+                }
+            }
+        }
+
     }
 }

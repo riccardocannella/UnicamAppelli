@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace UnicamAppelli.Modello{
     public class Appello{
@@ -6,7 +7,8 @@ namespace UnicamAppelli.Modello{
             get;
             set;
         }
-        public string DataAppello{
+
+        public DateTime DataAppello{
             get;
             set;
         }
